@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2015-10-27T19:43:26 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fillTrendByDate" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="751a4cc1-c2e0-490b-b324-876bd84856be">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.jasperserver.url" value="http://localhost:8081/jasperserver/"/>
+	<property name="ireport.jasperserver.user" value="jasperadmin"/>
+	<property name="ireport.jasperserver.reportUnit" value="/reports/MongoDB/fillTrend"/>
+	<property name="ireport.jasperserver.report.resource" value="/reports/MongoDB/fillTrend_files/fillTrend_jrxml"/>
+	<parameter name="From" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="To" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Bin1" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Bin2" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="BinsList" class="java.util.ArrayList"/>
+	<queryString language="MongoDbQuery">
+		<![CDATA[{
+	collectionName : 'BinHistory',
+	findQuery : {
+		'Date' : {'$gte' :$P{From}, '$lte' :$P{To}},
+		'binId' : {'$in' : $P{BinsList}}
+	}
+}]]>
+	</queryString>
+	<field name="Date" class="java.lang.Integer"/>
+	<field name="_id" class="org.bson.types.ObjectId"/>
+	<field name="binDate" class="java.lang.String"/>
+	<field name="binId" class="java.lang.Integer"/>
+	<field name="fillLevel" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="174" y="19" width="158" height="60" uuid="2ca02d6c-25a4-4e24-b505-6684d12e1233"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Fill Trend]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="171">
+			<lineChart>
+				<chart>
+					<reportElement x="216" y="71" width="200" height="100" uuid="51881fe6-2377-498a-b76a-9ff6407d8ddd"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{binId}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{Date}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{fillLevel}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+		</band>
+	</summary>
+</jasperReport>
